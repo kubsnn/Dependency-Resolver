@@ -135,7 +135,7 @@ int main() {
     auto app = resolver.resolve<Application>(scope);
 
     // Alternative way of using temporary scope:
-    // auto app = resolver.resolve<Application>(dependency_resolver::temporary_scope);
+    // auto app = resolver.resolve<Application>(dependency_resolver::temporary_scope{});
 
     // Running the application
     app->run();
