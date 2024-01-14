@@ -289,11 +289,13 @@ namespace reflections {
             : base(my_tuple) { }
 
         inline std::shared_ptr<TInterface> value(extensible_tuple& context) override {
-            return my_tuple_.resolve_object<TService>(context);
+            //return my_tuple_.resolve_object<TService>(context);
+            return my_tuple_.template resolve_object<TService>(context);
         }
 
         inline std::shared_ptr<TInterface> value() override {
-            return my_tuple_.resolve_object<TService>();
+            //return my_tuple_.resolve_object<TService>();
+            return my_tuple_.template resolve_object<TService>();
         }
     };
 
@@ -311,7 +313,7 @@ namespace reflections {
             auto it = context.find<TService>();
 
             if (it == context.end()) {
-                context.add_singleton<TService, TService>(my_tuple_.resolve_object<TService>(context));
+                context.add_singleton<TService, TService>(my_tuple_.template resolve_object<TService>(context));
             }
 
             return context.get<TService>(context);

@@ -16,5 +16,5 @@ jobs:
       run: cd tests && cmake -B build && cmake --build build
 
     - name: Run tests
-      run: cd build && ctest
+      run: cd tests/build && ctest
 
