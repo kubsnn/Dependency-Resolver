@@ -1,0 +1,19 @@
+name: windows-tests
+
+on: [push, pull_request]
+
+jobs:
+  build_and_tests:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up MSVC v142
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Build
+      run: (cmake -B build) -and (cmake --build build)
+
+    - name: Run tests
+      run: cd build; ctest -C Debug -V

@@ -1,0 +1,36 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "CMake1",
+			"command": "cmake",
+			"args":[
+				"-B",
+				"build",
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/tests"
+			},
+		},
+		{
+			"dependsOn": [
+				"CMake1"
+			],
+			"type": "cppbuild",
+			"label": "Build tests",
+			"command": "cmake",
+			"args": [
+				"--build",
+				"build"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/tests"
+			},
+			"problemMatcher": [
+				"$msCompile"
+			],
+			"group": "build"
+		}
+	]
+}
