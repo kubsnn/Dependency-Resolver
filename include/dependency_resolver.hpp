@@ -289,12 +289,10 @@ namespace reflections {
             : base(my_tuple) { }
 
         inline std::shared_ptr<TInterface> value(extensible_tuple& context) override {
-            //return my_tuple_.resolve_object<TService>(context);
             return my_tuple_.template resolve_object<TService>(context);
         }
 
         inline std::shared_ptr<TInterface> value() override {
-            //return my_tuple_.resolve_object<TService>();
             return my_tuple_.template resolve_object<TService>();
         }
     };
