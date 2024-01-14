@@ -13,6 +13,9 @@ Dependency Resolver is compatible with C++14 and higher. This ensures a wide ran
 
 - Easy integration with C++ projects.
 - Support for singleton, transient, and scoped lifetimes.
+- Polymorphism support: Allows registering interfaces with their respective implementations, like:<br/>
+   ```resolver.add_transient<IInterface, Implementation>()```.
+- Resolves every service as ```std::shared_ptr```, ensuring safe and efficient memory management.
 - Type-safe resolution of dependencies.
 - Header-only library: no need to compile or link against.
 
