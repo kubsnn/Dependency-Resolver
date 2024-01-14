@@ -50,9 +50,9 @@ namespace reflections {
     // The definitions of friend functions.
     template <typename T, typename U, int N, bool B,
         typename = typename std::enable_if_t<
-        !std::is_same_v<
+        !std::is_same<
         std::remove_cv_t<std::remove_reference_t<T>>,
-        std::remove_cv_t<std::remove_reference_t<U>>>>>
+        std::remove_cv_t<std::remove_reference_t<U>>>::value>>
         struct fn_def
     {
         friend auto loophole(tag<T, N>) { return U{}; }
@@ -354,7 +354,7 @@ namespace reflections {
     template <typename T>
     inline std::shared_ptr<T> extensible_tuple::resolve_object() const {
         using tuple_type = jaszyk::dependency_resolver_impl::utility::reflections::as_tuple<T>;
-        return resolve_object_helper<T>(std::make_index_sequence<std::tuple_size_v<tuple_type>>{});
+        return resolve_object_helper<T>(std::make_index_sequence<std::tuple_size<tuple_type>::value>{});
     }
 
     template <typename T, std::size_t... Is>
@@ -370,7 +370,7 @@ namespace reflections {
     template <typename T>
     inline std::shared_ptr<T> extensible_tuple::resolve_object(extensible_tuple& scope) const {
         using tuple_type = jaszyk::dependency_resolver_impl::utility::reflections::as_tuple<T>;
-        return resolve_object_helper<T>(scope, std::make_index_sequence<std::tuple_size_v<tuple_type>>{});
+        return resolve_object_helper<T>(scope, std::make_index_sequence<std::tuple_size<tuple_type>::value>{});
     }
 
     template <typename T, std::size_t... Is>
@@ -447,49 +447,49 @@ namespace reflections {
 
         template <typename TInterface, typename TService>
         inline void add_singleton(const TService& value) {
-            static_assert(!std::is_abstract_v<TService>, "Cannot register abstract type.");
+            static_assert(!std::is_abstract<TService>::value, "Cannot register abstract type.");
             data_.add_singleton<TInterface, TService>(std::make_shared<TService>(value));
         }
 
         template <typename TService>
         inline void add_singleton(const TService& value) {
-			static_assert(!std::is_abstract_v<TService>, "Cannot register abstract type.");
+			static_assert(!std::is_abstract<TService>::value, "Cannot register abstract type.");
 			data_.add_singleton<TService, TService>(std::make_shared<TService>(value));
 		}
 
         template <typename TService>
         inline void add_singleton() {
-            static_assert(!std::is_abstract_v<TService>, "Cannot register abstract type.");
+            static_assert(!std::is_abstract<TService>::value, "Cannot register abstract type.");
             data_.add_singleton<TService, TService>(data_.resolve_object<TService>());
         }
 
         template <typename TInterface, typename TService>
         inline void add_singleton() {
-            static_assert(!std::is_abstract_v<TService>, "Cannot register abstract type.");
+            static_assert(!std::is_abstract<TService>::value, "Cannot register abstract type.");
             data_.add_singleton<TInterface, TService>(data_.resolve_object<TService>());
         }
 
         template <typename TService>
         inline void add_transient() {
-            static_assert(!std::is_abstract_v<TService>, "Cannot register abstract type.");
+            static_assert(!std::is_abstract<TService>::value, "Cannot register abstract type.");
             data_.add_transient<TService, TService>();
         }
 
         template <typename TInterface, typename TService>
         inline void add_transient() {
-            static_assert(!std::is_abstract_v<TService>, "Cannot register abstract type.");
+            static_assert(!std::is_abstract<TService>::value, "Cannot register abstract type.");
             data_.add_transient<TInterface, TService>();
         }
 
         template <typename TService>
         inline void add_scoped() {
-            static_assert(!std::is_abstract_v<TService>, "Cannot register abstract type.");
+            static_assert(!std::is_abstract<TService>::value, "Cannot register abstract type.");
             data_.add_scoped<TService, TService>();
         }
 
         template <typename TInterface, typename TService>
         inline void add_scoped() {
-            static_assert(!std::is_abstract_v<TService>, "Cannot register abstract type.");
+            static_assert(!std::is_abstract<TService>::value, "Cannot register abstract type.");
 			data_.add_scoped<TInterface, TService>();
 		}
 
